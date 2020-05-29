@@ -2,17 +2,38 @@
 <html>
 	<head>
 		<script src="main.js"></script>
+		<style>	*
+			{
+				text-align: center;
+				margin: auto;
+			}
+		</style>
 	</head>
-	
-	<body>
-		<p>Click the button for a random alphanumeric! (of length 20)</p>
+	<body style="border-style: dotted; max-width:630px; padding:10px;">
+		<div style="background-color:white;">
+			<h1 style="font-family:Comic Sans MS">
+				Generate a secure password
+			</h1>
 
-		<input type="button" onclick="display_random_alphanumeric()" value="Get Random Alphanumeric">
-		
-		<div id="random alphanumeric"></div>
+			<form name="registrationForm" style="text-align:center;">
+				<span>Length</span>
+				<input type="range" name="lengthInputName" id="lengthInputId" value="23" min="1" max="100" oninput="lengthOutputId.value = lengthInputId.value; display_random_alphanumeric(lengthInputId.value)">
+				<output name="lengthOutputName" id="lengthOutputId">23</output>
 
-		<script type="text/javascript">
-			display_random_alphanumeric()
-		</script>
+				<input type="button" onclick="display_random_alphanumeric(lengthInputId.value)" value="Generate">
+
+				<input type="button" id="button1" onclick="CopyToClipboard('random alphanumeric')" value="Copy"></button>
+
+			</form>
+
+			<br>
+
+			<div id="random alphanumeric" style="background-color:white; width:620px;">
+			</div>
+
+			<script type="text/javascript">
+				display_random_alphanumeric(lengthInputId.value)
+			</script>
+		</div>
 	</body>
 </html>
