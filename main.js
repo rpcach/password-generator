@@ -3,8 +3,25 @@ function get_random_alphanumeric() {
 
 	var randomValue = new Uint8Array(1)
 
-	while(!String.fromCharCode(randomValue[0]).match(/[a-zA-Z0-9!@#\$%\^\*\-=_+]/)) {
-		crypto.getRandomValues(randomValue)
+	match_string = "["
+	if(document.getElementById('include_lowercase').checked) {
+		match_string += "a-z"
+	}
+	if(document.getElementById('include_uppercase').checked) {
+		match_string += "A-Z"
+	}
+	if(document.getElementById('include_numbers').checked) {
+		match_string += "0-9" 
+	}
+	if(document.getElementById('include_symbols').checked) {
+		match_string += "\!\@\#\$\%\^\*\\-\=\_\+"
+	}
+	match_string += "]"
+
+	if(match_string != "[]") {
+		while(!String.fromCharCode(randomValue[0]).match(new RegExp(match_string))) {
+				crypto.getRandomValues(randomValue)
+		}
 	}
 
 	randomValue = String.fromCharCode(randomValue[0])
