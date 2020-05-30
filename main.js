@@ -17,6 +17,7 @@ var pw_val = ''
 function display_random_alphanumeric(val) {
 	pw_html_show = '<p style="word-break:break-all; font-family:Courier New; font-size:25px; font-weight:bold; letter-spacing:7px;">'
 	pw_html_hide = pw_html_show
+	pw_val = ''
 
 	for (var i = 0; i < val; i++) {
 		x = get_random_alphanumeric()
@@ -43,13 +44,11 @@ function display_random_alphanumeric(val) {
 }
 
 function CopyToClipboard(containerid) {
-	if (window.getSelection) {
-		var range = document.createRange();
-		range.selectNode(document.getElementById(containerid));
-		window.getSelection().addRange(range);
-		document.execCommand("copy");
-		window.getSelection().removeAllRanges();
-	}
+	navigator.clipboard.writeText(pw_val).then(function() {
+		/* clipboard successfully set */
+	}, function() {
+		/* clipboard write failed */
+	});
 }
 function myFunction() {
 	if(document.getElementById('myInput').checked) {
