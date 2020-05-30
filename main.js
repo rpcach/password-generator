@@ -11,24 +11,35 @@ function get_random_alphanumeric() {
 
 	return randomValue
 }
-
+var pw_html_show = ''
+var pw_html_hide = ''
+var pw_val = ''
 function display_random_alphanumeric(val) {
-	var string = '<p style="word-break:break-all; font-family:Courier New; font-size:25px; font-weight:bold; letter-spacing:7px;">'
-	
+	pw_html_show = '<p style="word-break:break-all; font-family:Courier New; font-size:25px; font-weight:bold; letter-spacing:7px;">'
+	pw_html_hide = pw_html_show
+
 	for (var i = 0; i < val; i++) {
 		x = get_random_alphanumeric()
 		if(x.match(/[0-9]/)) {
-			string += '<span style="color:blue;">' + x + "</span>"
+			pw_html_show += '<span style="color:blue;">' + x + "</span>"
 		} else if(x.match(/[!@#\$%\^\*\-=_+]/)) {
-			string += '<span style="color:red;">' + x + "</span>"
+			pw_html_show += '<span style="color:red;">' + x + "</span>"
 		} else {
-			string += x
+			pw_html_show += x
 		}
+
+		pw_html_hide += "*"
+		pw_val += x
 	}
 
-	string += '</p>'
+	pw_html_show += '</p>'
+	pw_html_hide += '</p>'
 
-	document.getElementById("random alphanumeric").innerHTML = string
+	if(document.getElementById('myInput').checked) {
+		document.getElementById("random alphanumeric").innerHTML = pw_html_show
+	} else {
+		document.getElementById("random alphanumeric").innerHTML = pw_html_hide
+	}
 }
 
 function CopyToClipboard(containerid) {
@@ -38,5 +49,12 @@ function CopyToClipboard(containerid) {
 		window.getSelection().addRange(range);
 		document.execCommand("copy");
 		window.getSelection().removeAllRanges();
+	}
+}
+function myFunction() {
+	if(document.getElementById('myInput').checked) {
+		document.getElementById("random alphanumeric").innerHTML = pw_html_show
+	} else {
+		document.getElementById("random alphanumeric").innerHTML = pw_html_hide
 	}
 }
