@@ -18,14 +18,14 @@
 
 			<form name="registrationForm" style="text-align:center;">
 				<span>Length</span>
-				<input type="range" name="lengthInputName" id="lengthInputId" value="23" min="1" max="100" oninput="lengthOutputId.value = lengthInputId.value; display_random_alphanumeric(lengthInputId.value)">
-				<output name="lengthOutputName" id="lengthOutputId">23</output>
+				<input type="range" name="lengthInputName" id="lengthInputId" value="12" min="8" max="100" oninput="lengthOutputId.value = lengthInputId.value; display_random_alphanumeric(lengthInputId.value)">
+				<output name="lengthOutputName" id="lengthOutputId"></output>
 
 				<input type="button" onclick="display_random_alphanumeric(lengthInputId.value)" value="Generate">
 
 				<input type="button" id="button1" onclick="CopyToClipboard('random alphanumeric')" value="Copy">
 			</form>
-			<input type="checkbox" id="myInput" onclick="myFunction()" checked="checked">&nbsp;Show Password
+			<input type="checkbox" id="myInput" onclick="toggle_pw_visibility()" checked="checked">&nbsp;Show Password
 
 			<br>
 
@@ -38,6 +38,7 @@
 			</div>
 
 			<script type="text/javascript">
+				lengthOutputId.value = lengthInputId.value
 				display_random_alphanumeric(lengthInputId.value)
 			</script>
 		</div>

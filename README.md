@@ -6,4 +6,3 @@ https://htmlpreview.github.io/?https://github.com/rpcach/password-generator/blob
 
 ## Tasks
 
-* Ensure that each checked "include" option appears in the generated password
