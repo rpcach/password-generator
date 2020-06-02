@@ -6,4 +6,4 @@ https://htmlpreview.github.io/?https://github.com/rpcach/password-generator/blob
 
 ## Tasks
 
-* Add feature to toggle the viewability of the generated password 
+* Ensure that each checked "include" option appears in the generated password
