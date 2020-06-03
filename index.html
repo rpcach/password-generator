@@ -7,40 +7,42 @@
 				text-align: center;
 				margin: auto;
 			}
+			p {
+				word-break:break-all;
+				font-family:Courier New;
+				font-size:25px;
+				font-weight:bold;
+				letter-spacing:7px;"
+			}
 			
 		</style>
 	</head>
 	<body style="border-style: dotted; max-width:630px; padding:10px;">
-		<div style="background-color:white;">
-			<h1 style="font-family:Comic Sans MS">
-				Generate a secure password
-			</h1>
+		<h1 style="font-family:Comic Sans MS">
+			Generate a secure password
+		</h1>
 
-			<form name="registrationForm" style="text-align:center;">
-				<span>Length</span>
-				<input type="range" name="lengthInputName" id="lengthInputId" value="12" min="8" max="100" oninput="lengthOutputId.value = lengthInputId.value; display_random_alphanumeric(lengthInputId.value)">
-				<output name="lengthOutputName" id="lengthOutputId"></output>
+		<span>Length</span>
+		<input type="range" name="lengthInputName" id="lengthInputId" value="12" min="8" max="100" oninput="lengthOutputId.value = lengthInputId.value; get_password_html(lengthInputId.value)">
+		<output name="lengthOutputName" id="lengthOutputId"></output>
+		<input type="button" onclick="get_password_html(lengthInputId.value)" value="Generate">
+		<input type="button" id="button1" onclick="copy_password()" value="Copy">
+		<br>
 
-				<input type="button" onclick="display_random_alphanumeric(lengthInputId.value)" value="Generate">
+		<input type="checkbox" id="myInput" onclick="set_pw_visibility()" checked="checked">&nbsp;Show Password
+		<br>
 
-				<input type="button" id="button1" onclick="CopyToClipboard('random alphanumeric')" value="Copy">
-			</form>
-			<input type="checkbox" id="myInput" onclick="toggle_pw_visibility()" checked="checked">&nbsp;Show Password
+		<input type="checkbox" id="include_lowercase" onclick="get_password_html(lengthInputId.value)" checked="checked">&nbsp;a-z&nbsp;
+		<input type="checkbox" id="include_uppercase" onclick="get_password_html(lengthInputId.value)" checked="checked">&nbsp;A-Z&nbsp;
+		<input type="checkbox" id="include_numbers" onclick="get_password_html(lengthInputId.value)" checked="checked">&nbsp;0-9&nbsp;
+		<input type="checkbox" id="include_symbols" onclick="get_password_html(lengthInputId.value)" checked="checked">&nbsp;symbols
 
-			<br>
-
-			<input type="checkbox" id="include_lowercase" onclick="display_random_alphanumeric(lengthInputId.value)" checked="checked">&nbsp;a-z&nbsp;
-			<input type="checkbox" id="include_uppercase" onclick="display_random_alphanumeric(lengthInputId.value)" checked="checked">&nbsp;A-Z&nbsp;
-			<input type="checkbox" id="include_numbers" onclick="display_random_alphanumeric(lengthInputId.value)" checked="checked">&nbsp;0-9&nbsp;
-			<input type="checkbox" id="include_symbols" onclick="display_random_alphanumeric(lengthInputId.value)" checked="checked">&nbsp;symbols
-
-			<div id="random alphanumeric" style="background-color:white; max-width:620px;">
-			</div>
-
-			<script type="text/javascript">
-				lengthOutputId.value = lengthInputId.value
-				display_random_alphanumeric(lengthInputId.value)
-			</script>
+		<div id="password" style="max-width:620px;">
 		</div>
+
+		<script type="text/javascript">
+			lengthOutputId.value = lengthInputId.value
+			get_password_html(lengthInputId.value)
+		</script>
 	</body>
 </html>

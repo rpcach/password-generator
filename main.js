@@ -2,80 +2,71 @@ var match_1 = ''
 var match_2 = ''
 var match_3 = ''
 var match_4 = ''
-function get_random_alphanumeric() {
-	var crypto = window.crypto
+var pw_html_show = ''
+var pw_html_hide = ''
+var pw_val = ''
 
-	var randomValue = new Uint8Array(1)
-
+function get_match_string() {
 	match_1 = document.getElementById('include_lowercase').checked ? 'a-z' : ''
 	match_2 = document.getElementById('include_uppercase').checked ? 'A-Z' : ''
 	match_3 = document.getElementById('include_numbers').checked ? '0-9' : ''
 	match_4 = document.getElementById('include_symbols').checked ? '\!\@\#\$\%\^\*\\-\=\_\+' : ''
 	
-	var match_string = "[" + match_1 + match_2 + match_3 + match_4 + "]"
+	return "[" + match_1 + match_2 + match_3 + match_4 + "]"
+}
 
-	if(match_string != "[]") {
+function get_password(length, match_string) {
+	if(match_string == '[]') {
+		return ''
+	}
+	var crypto = window.crypto
+	var res = ''
+
+	for(var i = 0; i < length; i++) {
+		var randomValue = new Uint8Array(1)
+
 		while(!String.fromCharCode(randomValue[0]).match(new RegExp(match_string))) {
-				crypto.getRandomValues(randomValue)
+			crypto.getRandomValues(randomValue)
+		}
+
+		res += String.fromCharCode(randomValue[0])
+	}
+
+	if(	(res.match(new RegExp('[' + match_1 + ']')) === null & match_1 != '') |
+		(res.match(new RegExp('[' + match_2 + ']')) === null & match_2 != '') |
+		(res.match(new RegExp('[' + match_3 + ']')) === null & match_3 != '') |
+		(res.match(new RegExp('[' + match_4 + ']')) === null & match_4 != '') ) {
+		res = get_password(length, match_string)
+	}
+
+	return res
+}
+
+function get_password_html(length) {
+	pw_val = get_password(length, get_match_string())
+
+	pw_html_show = '<p>'
+
+	for (let x of pw_val) {
+		if(x.match(/[0-9]/)) {
+			pw_html_show += '<span style="color:blue;">' + x + "</span>"
+		} else if(x.match(/[!@#\$%\^\*\-=_+]/)) {
+			pw_html_show += '<span style="color:red;">' + x + "</span>"
+		} else {
+			pw_html_show += x
 		}
 	}
 
-	randomValue = String.fromCharCode(randomValue[0])
+	pw_html_show += '</p>'
+	pw_html_hide = '<p>' + "*".repeat(length) + '</p>'
 
-	return randomValue
+	set_pw_visibility()
 }
 
-var pw_html_show = ''
-var pw_html_hide = ''
-var pw_val = ''
-function display_random_alphanumeric(val) {
-	do {
-		pw_html_show = '<p style="word-break:break-all; font-family:Courier New; font-size:25px; font-weight:bold; letter-spacing:7px;">'
-		pw_html_hide = pw_html_show
-		pw_val = ''
-
-		for (var i = 0; i < val; i++) {
-			x = get_random_alphanumeric()
-			if(x.match(/[0-9]/)) {
-				pw_html_show += '<span style="color:blue;">' + x + "</span>"
-			} else if(x.match(/[!@#\$%\^\*\-=_+]/)) {
-				pw_html_show += '<span style="color:red;">' + x + "</span>"
-			} else {
-				pw_html_show += x
-			}
-
-			pw_html_hide += "*"
-			pw_val += x
-		}
-
-		pw_html_show += '</p>'
-		pw_html_hide += '</p>'
-
-	} while (
-		(pw_val.match(new RegExp('[' + match_1 + ']')) === null & match_1 != '') |
-		(pw_val.match(new RegExp('[' + match_2 + ']')) === null & match_2 != '') |
-		(pw_val.match(new RegExp('[' + match_3 + ']')) === null & match_3 != '') |
-		(pw_val.match(new RegExp('[' + match_4 + ']')) === null & match_4 != '')
-	)
-
-	if(document.getElementById('myInput').checked) {
-		document.getElementById("random alphanumeric").innerHTML = pw_html_show
-	} else {
-		document.getElementById("random alphanumeric").innerHTML = pw_html_hide
-	}
+function copy_password() {
+	navigator.clipboard.writeText(pw_val)
 }
 
-function CopyToClipboard(containerid) {
-	navigator.clipboard.writeText(pw_val).then(function() {
-		/* clipboard successfully set */
-	}, function() {
-		/* clipboard write failed */
-	});
-}
-function toggle_pw_visibility() {
-	if(document.getElementById('myInput').checked) {
-		document.getElementById("random alphanumeric").innerHTML = pw_html_show
-	} else {
-		document.getElementById("random alphanumeric").innerHTML = pw_html_hide
-	}
+function set_pw_visibility() {
+	document.getElementById("password").innerHTML = document.getElementById('myInput').checked ? pw_html_show: pw_html_hide
 }
